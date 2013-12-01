@@ -2,6 +2,7 @@ package com.zhangxaochen.sensordataxml;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -69,6 +70,10 @@ public class NewSessionNode extends XmlRootNode{
 		
 		
 		String names="agmr";
+//		LinkedList<String> channelNames=new LinkedList<String>();
+//		ArrayList<String> channelNames2=new ArrayList<String>();
+		String[] channelNames={"a", "g", "m", "r", "la", "lawf"};
+		
 //		names.charAt(0);
 		
 //		ChannelNode channelNode=new ChannelNode();
