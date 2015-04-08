@@ -34,6 +34,10 @@ public class NewSessionNode extends XmlRootNode{
 		LinkedList<float[]> gbuf = sensorData.getGbuf();
 		LinkedList<float[]> mbuf = sensorData.getMbuf();
 		LinkedList<float[]> rbuf = sensorData.getRbuf();
+		
+		//2015-4-8 16:23:39
+		LinkedList<float[]> bsssBuf = sensorData.getBSSSbuf();
+		
 //		LinkedList<Long> tsbuf=sensorData.getTbuf();
 		
 		LinkedList<Double> aTsBuf=sensorData.getATsBuf();
@@ -46,12 +50,16 @@ public class NewSessionNode extends XmlRootNode{
 		dataBufs.add(gbuf);
 		dataBufs.add(mbuf);
 		dataBufs.add(rbuf);
+		//2015-4-8 16:26:33
+		dataBufs.add(bsssBuf);
 		
 		ArrayList<LinkedList<Double>> tsBufs=new ArrayList<LinkedList<Double>>();
 		tsBufs.add(aTsBuf);
 		tsBufs.add(gTsBuf);
 		tsBufs.add(mTsBuf);
 		tsBufs.add(rTsBuf);
+		//2015-4-8 16:26:48, bsssBuf 使用 acc 时间戳：
+		tsBufs.add((LinkedList<Double>) aTsBuf.clone());
 		
 
 		// 加一个 Node 节点：
@@ -64,25 +72,21 @@ public class NewSessionNode extends XmlRootNode{
 		threadCnt++;
 		
 		threadNode.setThreadName(0);
+		
+		//2015-4-8 16:25:04， 添加 'c'字符， 存储 cellID & bsss
+		String[] names={"a", "g", "m", "r", "bsss"};
+//		String[] channelNames={"a", "g", "m", "r", "la", "lawf"};
+
 		//A,G,M,R
-		threadNode.setChannelCnt(4);
-//		threadNode.getChannelsNode().channelList.add(object)
-		
-		
-		String names="agmr";
-//		LinkedList<String> channelNames=new LinkedList<String>();
-//		ArrayList<String> channelNames2=new ArrayList<String>();
-		String[] channelNames={"a", "g", "m", "r", "la", "lawf"};
-		
-//		names.charAt(0);
+		threadNode.setChannelCnt(names.length);
 		
 //		ChannelNode channelNode=new ChannelNode();
 //		channelNode.setChannelName("a");
-		for(int i=0; i<4; i++){
+		for(int i=0; i<names.length; i++){
 			ChannelNode channelNode=new ChannelNode();
 			threadNode.getChannelsNode().channelList.add(channelNode);
 			
-			channelNode.setChannelName(""+names.charAt(i));
+			channelNode.setChannelName(names[i]);
 			
 			LinkedList<float[]> dataBuf=dataBufs.get(i);
 			LinkedList<Double> tsBuf=tsBufs.get(i);
